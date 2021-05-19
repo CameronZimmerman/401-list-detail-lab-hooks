@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import DetailContainer from '../container/DetailContainer';
 import ListPage from '../container/ListPage'
-import Detail from '../display/Detail'
 export default function App() {
   return (
     <Router>
@@ -12,7 +12,7 @@ export default function App() {
         />
         <Route path="/:id"
          exact={true}
-         render={ routerProps => <Detail {...routerProps} /> } 
+         render={ routerProps => <DetailContainer {...routerProps} /> } 
         />
       </Switch>
     </Router>

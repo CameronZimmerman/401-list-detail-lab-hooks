@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import starTrekData from '../../TestData/startrek.json'
-import ListPage from './ListPage'
+import DetailContainer from './DetailContainer'
 describe('ListPage component', () => {
   const server = setupServer(
     rest.get('https://trek-dex.herokuapp.com/api/v1/characters', (req, res, ctx) => {
@@ -11,15 +11,21 @@ describe('ListPage component', () => {
     })
   )
 
+  const fakeProps = {
+    match: {
+      params: {
+        id: '6'
+      }
+    }
+  }
+
   beforeAll(() => server.listen())
   afterAll(() => server.close())
 
-  it('renders a list of Star Trek characters to the screen on load', async () => {
-    render(<ListPage/>)
+  it('renders a specific Star Trek characters to the screen on load', async () => {
+    render(<DetailContainer {...fakeProps}/>)
 
     screen.getByText('Loading', {exact: false})
-    const charList = await screen.findByLabelText('character list')
-    screen.getByText('Scotty', {exact: false})
-    expect(charList).not.toBeEmptyDOMElement()
+    await screen.findByText('Human', {exact: false})
   })
 })
