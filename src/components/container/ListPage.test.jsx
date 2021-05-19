@@ -12,8 +12,10 @@ describe('ListPage component', () => {
 
   beforeAll(() => server.listen())
   afterAll(() => server.close())
-  
-  it('renders a list of Star Trek characters to the screen on load', () => {
-    
+
+  it('renders a list of Star Trek characters to the screen on load', async () => {
+    screen.getByText('Loading')
+    const charList = await screen.findByRole('list', {name: 'characters'})
+    expect(charList).not.toBeEmptyDOMElement()
   })
 })
